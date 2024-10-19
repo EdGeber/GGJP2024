@@ -57,7 +57,6 @@ namespace StarterAssets
 
 		// player
 		private float _speed;
-		private float _rotationVelocity;
 		private float _verticalVelocity;
 		private float _terminalVelocity = 53.0f;
 
@@ -70,6 +69,15 @@ namespace StarterAssets
 		[Range(0f, 1f)]
 		[SerializeField]
 		float rotationDamping = 0.1f;
+
+		[SerializeField]
+		float maxInteractiveDistance = 2f;
+        readonly Vector3 interactionRaySource = new Vector3(0.5f, 0.5f, 0.0f);
+        Ray InteractionRay => UnityEngine.Camera.main.ViewportPointToRay(interactionRaySource);
+        bool interact;
+		Interactive focusedObject;
+
+		InputActions inputActions;
 
 
 #if ENABLE_INPUT_SYSTEM
@@ -93,15 +101,6 @@ namespace StarterAssets
 			}
 		}
 
-        private void OnEnable()
-        {
-			targetCamPitch = CinemachineCameraTarget.transform.localRotation;
-        }
-
-		private void OnDisable()
-		{
-        }
-
         private void Awake()
 		{
 			// get a reference to our main camera
@@ -109,6 +108,7 @@ namespace StarterAssets
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
+			inputActions = new InputActions();
 		}
 
 		private void Start()
@@ -126,14 +126,32 @@ namespace StarterAssets
 			_fallTimeoutDelta = FallTimeout;
 		}
 
-		private void Update()
+        private void OnEnable()
+        {
+            targetCamPitch = CinemachineCameraTarget.transform.localRotation;
+            inputActions.Enable();
+        }
+
+        private void OnDisable()
+        {
+            inputActions.Disable();
+			focusedObject = null;
+        }
+
+        private void Update()
 		{
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			InteractionCheck();
 		}
 
-		private void LateUpdate()
+        private void FixedUpdate()
+        {
+			HandleInteraction();
+        }
+
+        private void LateUpdate()
 		{
 			CameraRotation();
 		}
@@ -171,7 +189,7 @@ namespace StarterAssets
 		private void Move()
 		{
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
-            float targetSpeed = (_input.sprint ? SprintSpeed : MoveSpeed) * inputMagnitude;
+			float targetSpeed = (_input.sprint ? SprintSpeed : MoveSpeed) * inputMagnitude;
 
             Vector3 targetVelocity = transform.right * _input.move.x + transform.forward * _input.move.y;
             targetVelocity.Normalize();
@@ -281,7 +299,57 @@ namespace StarterAssets
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
 		}
 
-		private void OnDrawGizmosSelected()
+		private void InteractionCheck()
+		{
+			if(Cursor.lockState == CursorLockMode.Locked && inputActions.FirstPerson.Interact.triggered)
+			{
+				interact = true;
+			}
+		}
+
+        private void HandleInteraction()
+        {
+            if (interact)
+            {
+                if (focusedObject != null && focusedObject.IsInteractive)
+                {
+                    focusedObject.Interact();
+                }
+            }
+            else
+            {
+                Interactive interactive = InteractionPhysics.GetHitInteractive(InteractionRay, maxInteractiveDistance);
+                if (interactive == null)
+                {
+                    if (focusedObject != null)
+                    {
+                        if (focusedObject.IsFocused)
+                        {
+                            focusedObject.Unfocus();
+                        }
+                        focusedObject = null;
+                    }
+                }
+                else if(interactive.IsInteractive)
+                {
+                    if (focusedObject == null)
+                    {
+                        focusedObject = interactive;
+                        interactive.Focus();
+                    }
+                    else if (!System.Object.ReferenceEquals(focusedObject, interactive))
+                    {
+                        focusedObject.Unfocus();
+                        focusedObject = interactive;
+                        interactive.Focus();
+                    }
+                }
+            }
+
+            interact = false;
+        }
+
+        private void OnDrawGizmosSelected()
 		{
 			Color transparentGreen = new Color(0.0f, 1.0f, 0.0f, 0.35f);
 			Color transparentRed = new Color(1.0f, 0.0f, 0.0f, 0.35f);

@@ -11,8 +11,9 @@ public class Interactive : MonoBehaviour
     public UnityEvent onUnfocused;
     public UnityEvent onInteracted;
 
-    public bool IsInteractive { get; set; }
-    public bool PlayerEverInteractedWith { get; set; }
+    public bool IsFocused { get; protected set; } = false;
+    public bool IsInteractive { get; set; } = true;
+    public bool PlayerEverInteractedWith { get; set; } = false;
 
     void SetupInteractionColliders()
     {
@@ -39,29 +40,29 @@ public class Interactive : MonoBehaviour
 
     public virtual void Focus()
     {
+        Debug.Assert(IsInteractive, "Você não deve tentar focar um objeto que não é interativo.");
+        IsFocused = true;
         onFocused?.Invoke();
+        Debug.Log("focus");
     }
 
     public virtual void Unfocus()
     {
+        IsFocused = false;
         onUnfocused?.Invoke();
+        Debug.Log("unfocus");
     }
 
-    public void TryInteract()
+    public virtual void Interact()
     {
-        if (IsInteractive) OnInteract();
-        else OnFailedInteractionAttempt();
-    }
-
-    protected virtual void OnInteract()
-    {
+        if(!IsInteractive)
+        {
+            Debug.LogWarning("Não tente interagir com objetos que têm obj.IsInteractive == false");
+            return;
+        }
+        PlayerEverInteractedWith = true;
         onInteracted?.Invoke();
+        Debug.Log("interact");
     }
-
-    protected virtual void OnFailedInteractionAttempt()
-    {
-
-    }
-
 
 }

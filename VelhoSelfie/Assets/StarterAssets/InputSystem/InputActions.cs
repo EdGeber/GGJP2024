@@ -62,6 +62,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""f74c96df-7792-41bb-adc0-e1351cec16bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -238,6 +247,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Sprint"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db19abec-cd0c-4f9c-a9ab-044f77deb377"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1f0ee25-08c7-4903-a6a7-c8ee63a25a3f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Xbox Controller;PS4 Controller"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -466,6 +497,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_FirstPerson_Look = m_FirstPerson.FindAction("Look", throwIfNotFound: true);
         m_FirstPerson_Jump = m_FirstPerson.FindAction("Jump", throwIfNotFound: true);
         m_FirstPerson_Sprint = m_FirstPerson.FindAction("Sprint", throwIfNotFound: true);
+        m_FirstPerson_Interact = m_FirstPerson.FindAction("Interact", throwIfNotFound: true);
         // ThirdPerson
         m_ThirdPerson = asset.FindActionMap("ThirdPerson", throwIfNotFound: true);
         m_ThirdPerson_Move = m_ThirdPerson.FindAction("Move", throwIfNotFound: true);
@@ -537,6 +569,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_FirstPerson_Look;
     private readonly InputAction m_FirstPerson_Jump;
     private readonly InputAction m_FirstPerson_Sprint;
+    private readonly InputAction m_FirstPerson_Interact;
     public struct FirstPersonActions
     {
         private @InputActions m_Wrapper;
@@ -545,6 +578,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_FirstPerson_Look;
         public InputAction @Jump => m_Wrapper.m_FirstPerson_Jump;
         public InputAction @Sprint => m_Wrapper.m_FirstPerson_Sprint;
+        public InputAction @Interact => m_Wrapper.m_FirstPerson_Interact;
         public InputActionMap Get() { return m_Wrapper.m_FirstPerson; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -566,6 +600,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IFirstPersonActions instance)
@@ -582,6 +619,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IFirstPersonActions instance)
@@ -733,6 +773,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IThirdPersonActions
     {

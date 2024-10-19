@@ -10,11 +10,12 @@ public class GameManagerController : MonoBehaviour
     FirstPersonController firstPersonController;
     ThirdPersonController thirdPersonController;
     private InputActions inputActions;
-    private bool IsIn2D => thirdPersonController.enabled;
-
+    public bool IsIn2D => thirdPersonController.enabled;
+    public static GameManagerController instance;
 
     private void Awake()
     {
+        instance = this;
         firstPersonController = GetComponent<FirstPersonController>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         inputActions = new InputActions();
@@ -22,7 +23,7 @@ public class GameManagerController : MonoBehaviour
         firstPersonController.enabled = true;
         thirdPersonController.enabled = false;
     }
-    
+
     void Update()
     {
         if (inputActions.PersonChange.ChangeCamera.triggered)

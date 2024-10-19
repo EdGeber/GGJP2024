@@ -24,6 +24,11 @@ public class GameManagerController : MonoBehaviour
         thirdPersonController.enabled = false;
     }
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     void Update()
     {
         if (inputActions.PersonChange.ChangeCamera.triggered)

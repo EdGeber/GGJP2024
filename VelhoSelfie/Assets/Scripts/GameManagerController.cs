@@ -3,36 +3,32 @@ using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
 
+[RequireComponent(typeof(FirstPersonController))]
+[RequireComponent(typeof(ThirdPersonController))]
 public class GameManagerController : MonoBehaviour
 {
-    public GameManagerController instance;
-    public GameObject camera2D,
-        player;
-    private bool _isIn2D = false;
-    private StarterAssetsInputs _playerInputs;
+    FirstPersonController firstPersonController;
+    ThirdPersonController thirdPersonController;
+    private InputActions inputActions;
+    private bool IsIn2D => thirdPersonController.enabled;
 
-    void Start()
+
+    private void Awake()
     {
-        instance = this;
-        _playerInputs = player.GetComponent<StarterAssetsInputs>();
+        firstPersonController = GetComponent<FirstPersonController>();
+        thirdPersonController = GetComponent<ThirdPersonController>();
+        inputActions = new InputActions();
+        inputActions.PersonChange.Enable();
+        firstPersonController.enabled = true;
+        thirdPersonController.enabled = false;
     }
-
+    
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (inputActions.PersonChange.ChangeCamera.triggered)
         {
-            if (_isIn2D)
-            {
-                camera2D.SetActive(false);
-                _isIn2D = false;
-                _playerInputs.cursorInputForLook = true;
-            }
-            else
-            {
-                camera2D.SetActive(true);
-                _isIn2D = true;
-                _playerInputs.cursorInputForLook = false;
-            }
+            firstPersonController.enabled = !firstPersonController.enabled;
+            thirdPersonController.enabled = !thirdPersonController.enabled;
         }
     }
 }

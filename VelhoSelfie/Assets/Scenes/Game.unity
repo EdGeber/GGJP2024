@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   move: {x: 0, y: 0}
   look: {x: 0, y: 0}
-  jump: 0
+  jump: 1
   sprint: 0
   analogMovement: 0
   cursorLocked: 1
@@ -2603,8 +2603,8 @@ MonoBehaviour:
     m_ActionId: e4ce1614-c754-48c1-9103-33130441661f
     m_ActionName: UI/New action
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultControlScheme: KeyboardMouse
+  m_DefaultActionMap: FirstPerson
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!4 &4559626049351865674
@@ -3061,7 +3061,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4416926083347132227}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 909d917d73a63f940ac158d02e936645, type: 3}
   m_Name: 

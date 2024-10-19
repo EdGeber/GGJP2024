@@ -86,7 +86,15 @@ namespace StarterAssets
 			}
 		}
 
-		private void Awake()
+        private void OnEnable()
+        {
+        }
+
+		private void OnDisable()
+		{
+        }
+
+        private void Awake()
 		{
 			// get a reference to our main camera
 			if (_mainCamera == null)

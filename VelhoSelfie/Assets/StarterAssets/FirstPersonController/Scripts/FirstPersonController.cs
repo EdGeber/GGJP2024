@@ -170,8 +170,18 @@ namespace StarterAssets
 
 		private void Move()
 		{
-			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
+            float targetSpeed = (_input.sprint ? SprintSpeed : MoveSpeed) * inputMagnitude;
+
+            Vector3 targetVelocity = transform.right * _input.move.x + transform.forward * _input.move.y;
+            targetVelocity.Normalize();
+            targetVelocity *= targetSpeed;
+
+			_controller.Move((targetVelocity + new Vector3(0.0f, _verticalVelocity, 0.0f)) * Time.deltaTime);
+
+			/*
+            // set target speed based on move speed, sprint speed and if sprint is pressed
+            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -213,6 +223,7 @@ namespace StarterAssets
 
 			// move the player
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+			*/
 		}
 
 		private void JumpAndGravity()

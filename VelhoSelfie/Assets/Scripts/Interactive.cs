@@ -5,14 +5,18 @@ using UnityEngine.Diagnostics;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(Outline))]
 public class Interactive : MonoBehaviour
 {
     public UnityEvent onFocused;
     public UnityEvent onUnfocused;
     public UnityEvent onInteracted;
 
-    public bool IsInteractive { get; set; }
-    public bool PlayerEverInteractedWith { get; set; }
+    public bool IsFocused { get; protected set; } = false;
+    public bool IsInteractive { get; set; } = true;
+    public bool PlayerEverInteractedWith { get; set; } = false;
+
+    Outline Outline => GetComponent<Outline>();
 
     void SetupInteractionColliders()
     {
@@ -39,29 +43,30 @@ public class Interactive : MonoBehaviour
 
     public virtual void Focus()
     {
+        Debug.Assert(IsInteractive, "Você não deve tentar focar um objeto que não é interativo.");
+        IsFocused = true;
         onFocused?.Invoke();
+        Outline.enabled = true;
+        GameEvents.ObjectFocusChanged?.Raise(this);
     }
 
     public virtual void Unfocus()
     {
+        IsFocused = false;
         onUnfocused?.Invoke();
+        Outline.enabled = false;
+        GameEvents.ObjectFocusChanged?.Raise(this);
     }
 
-    public void TryInteract()
+    public virtual void Interact()
     {
-        if (IsInteractive) OnInteract();
-        else OnFailedInteractionAttempt();
-    }
-
-    protected virtual void OnInteract()
-    {
+        if(!IsInteractive)
+        {
+            Debug.LogWarning("Não tente interagir com objetos que têm obj.IsInteractive == false");
+            return;
+        }
+        PlayerEverInteractedWith = true;
         onInteracted?.Invoke();
     }
-
-    protected virtual void OnFailedInteractionAttempt()
-    {
-
-    }
-
 
 }

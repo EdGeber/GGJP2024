@@ -12,9 +12,9 @@ TagManager:
   - Drone
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Player
+  - InvisibleGround
+  - InteractionCollider
   - 
   - 
   - 

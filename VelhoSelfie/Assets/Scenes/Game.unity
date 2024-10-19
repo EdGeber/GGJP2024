@@ -2571,8 +2571,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94af0d8549ac741dab4e1e6190a34f2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 5018218723414934210}
   DroneSpeed: 5
+  followDistance: 8
 --- !u!1 &3989317404716911317
 GameObject:
   m_ObjectHideFlags: 0

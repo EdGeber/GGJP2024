@@ -16,6 +16,7 @@ public class ThirdPersonController : MonoBehaviour
     {
         inputActions.ThirdPerson.Enable();
         camera2D.SetActive(true);
+        GameEvents.CurrentView?.Set(View.ThirdPerson);
     }
 
     private void OnDisable()

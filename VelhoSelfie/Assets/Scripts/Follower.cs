@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 public class Follower : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Follower : MonoBehaviour
 
     Vector3 newPosition = new Vector3();
 
-    // [Button]
+    [Button]
     void UpdateTransform()
     {
         if (target == null)
@@ -29,11 +30,6 @@ public class Follower : MonoBehaviour
     }
 
     private void Reset()
-    {
-        UpdateTransform();
-    }
-
-    private void OnValidate()
     {
         UpdateTransform();
     }

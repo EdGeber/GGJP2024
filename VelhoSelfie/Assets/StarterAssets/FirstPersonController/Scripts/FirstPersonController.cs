@@ -130,6 +130,7 @@ namespace StarterAssets
         {
             targetCamPitch = CinemachineCameraTarget.transform.localRotation;
             inputActions.Enable();
+			GameEvents.CurrentView?.Set(View.FirstPerson);
         }
 
         private void OnDisable()
@@ -314,7 +315,11 @@ namespace StarterAssets
                 if (focusedObject != null && focusedObject.IsInteractive)
                 {
                     focusedObject.Interact();
-                }
+					GameEvents.InteractionAttempted?.Raise(focusedObject);
+                } else
+				{
+					GameEvents.InteractionAttempted?.Raise(null);
+				}
             }
             else
             {

@@ -53,6 +53,7 @@ namespace StarterAssets
 
 		// cinemachine
 		private float _cinemachineTargetPitch;
+		private float _playerTargetYaw;
 
 		// player
 		private float _speed;
@@ -64,9 +65,15 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
-	
+		Quaternion targetCamPitch;  // up and down
+		Quaternion targetCamYaw;  // left and right
+		[Range(0f, 1f)]
+		[SerializeField]
+		float rotationDamping = 0.1f;
+
+
 #if ENABLE_INPUT_SYSTEM
-		private PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 #endif
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
@@ -88,6 +95,7 @@ namespace StarterAssets
 
         private void OnEnable()
         {
+			targetCamPitch = CinemachineCameraTarget.transform.localRotation;
         }
 
 		private void OnDisable()
@@ -142,21 +150,22 @@ namespace StarterAssets
 			// if there is an input
 			if (_input.look.sqrMagnitude >= _threshold)
 			{
-				//Don't multiply mouse input by Time.deltaTime
-				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
-				
-				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
-				_rotationVelocity = _input.look.x * RotationSpeed * deltaTimeMultiplier;
-
-				// clamp our pitch rotation
-				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
-
-				// Update Cinemachine camera target pitch
-				CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
-
 				// rotate the player left and right
-				transform.Rotate(Vector3.up * _rotationVelocity);
+				// don't multiply mouse input by Time.deltaTime
+				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+                _playerTargetYaw += _input.look.x * RotationSpeed * deltaTimeMultiplier;
+				targetCamYaw = Quaternion.Euler(0f, _playerTargetYaw, 0f);
+
+				// rotate the player up and down
+				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
+				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+				targetCamPitch = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
+
 			}
+
+            // Update Cinemachine camera target pitch
+            CinemachineCameraTarget.transform.localRotation = Quaternion.Slerp(CinemachineCameraTarget.transform.localRotation, targetCamPitch, 1f - rotationDamping);
+			transform.localRotation = Quaternion.Slerp(transform.localRotation, targetCamYaw, 1f - rotationDamping);
 		}
 
 		private void Move()

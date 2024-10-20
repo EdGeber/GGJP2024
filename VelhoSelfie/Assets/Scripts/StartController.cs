@@ -11,6 +11,6 @@ public class StartController : MonoBehaviour
     }
     public void GoToGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level0");
     }
 }

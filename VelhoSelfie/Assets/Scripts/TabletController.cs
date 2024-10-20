@@ -51,7 +51,7 @@ public class TabletController : MonoBehaviour
     {
         GameEvents.PlayerIsLookingDown.AddListener(OnPlayerLookedDown, AliveToken);
         GameEvents.MaxTabletBattery.AddListener(UpdateBatteryValue, AliveToken);
-        GameEvents.CurrentTabletBattery.AddListener(UpdateBatteryValue, AliveToken );
+        GameEvents.CurrentTabletBattery.AddListener(UpdateBatteryValue, AliveToken, true);
     }
 
 }

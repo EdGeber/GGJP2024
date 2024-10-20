@@ -5,13 +5,14 @@ using NaughtyAttributes;
 
 public class Follower : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    [SerializeField] Transform positionTarget;
+    [SerializeField] Transform rotationTarget;
 
-    [Tooltip("How smoothly the transform follows the target's position, separately for horizontal and vertical movement.")]
+    [Tooltip("How smoothly the transform follows the positionTarget's localPosition, separately for horizontal and vertical movement.")]
     [SerializeField][Range(0f, 1f)] float horizontalDamping = 0.8f;
     [SerializeField][Range(0f, 1f)] float verticalDamping = 0.8f;
     [SerializeField]
-    [Tooltip("How smoothly the transform follows the target's orientation")]
+    [Tooltip("How smoothly the transform follows the positionTarget's orientation")]
     [Range(0f, 1f)]
     float rotationDamping = 0f;
 
@@ -20,13 +21,14 @@ public class Follower : MonoBehaviour
     [Button]
     void UpdateTransform()
     {
-        if (target == null)
+        if (positionTarget != null)
         {
-            Debug.LogWarning("A Follows component has been added to the GameObject but no target has been assigned.");
-            return;
+            transform.localPosition = positionTarget.localPosition;
         }
-        transform.position = target.position;
-        transform.rotation = target.rotation;
+        if(rotationTarget != null)
+        {
+            transform.rotation = rotationTarget.rotation;
+        }
     }
 
     private void Reset()
@@ -36,27 +38,32 @@ public class Follower : MonoBehaviour
 
     void Start()
     {
-        if (target == null) Debug.LogWarning("A Follows component has been added to the GameObject but no target has been assigned.");
+        if (positionTarget == null) Debug.LogWarning("A Follows component has been added to the GameObject but no positionTarget has been assigned.");
         UpdateTransform();
     }
 
     void LerpPosition()
     {
-        float t = 1f - horizontalDamping;
-        newPosition.x = Mathf.Lerp(transform.position.x, target.position.x, 1f - horizontalDamping);
-        newPosition.y = Mathf.Lerp(transform.position.y, target.position.y, 1f - verticalDamping);
-        newPosition.z = Mathf.Lerp(transform.position.z, target.position.z, 1f - horizontalDamping);
+        newPosition.x = Mathf.Lerp(transform.localPosition.x, positionTarget.localPosition.x, 1f - horizontalDamping);
+        newPosition.y = Mathf.Lerp(transform.localPosition.y, positionTarget.localPosition.y, 1f - verticalDamping);
+        newPosition.z = Mathf.Lerp(transform.localPosition.z, positionTarget.localPosition.z, 1f - horizontalDamping);
         transform.localPosition = newPosition;
     }
 
     void LerpOrientation()
     {
-        transform.localRotation = Quaternion.Slerp(transform.rotation, target.rotation, 1f - rotationDamping);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotationTarget.rotation, 1f - rotationDamping);
     }
 
     void Update()
     {
-        LerpPosition();
-        LerpOrientation();
+        if(positionTarget != null)
+        {
+            LerpPosition();
+        }
+        if(rotationTarget != null)
+        {
+            LerpOrientation();
+        }
     }
 }

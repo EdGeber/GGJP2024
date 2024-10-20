@@ -184,7 +184,6 @@ namespace StarterAssets
 				GameEvents.PlayerIsLookingDown.Set(_cinemachineTargetPitch > LookDownEventRotationThreshould);
 			}
 
-            // Update Cinemachine camera target pitch
             CinemachineCameraTarget.transform.localRotation = Quaternion.Slerp(CinemachineCameraTarget.transform.localRotation, targetCamPitch, 1f - rotationDamping);
 			transform.localRotation = Quaternion.Slerp(transform.localRotation, targetCamYaw, 1f - rotationDamping);
 		}

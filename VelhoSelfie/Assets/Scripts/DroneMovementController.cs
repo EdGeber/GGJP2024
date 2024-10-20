@@ -56,7 +56,7 @@ public class DroneMovementController : MonoBehaviour
                 direction.z * DroneSpeed
             );
         }
-        else
+        else if (!_gameManager.IsIn2D)
         {
             _rigidbody.velocity = new Vector3(0, _rigidbody.velocity.y, 0);
         }

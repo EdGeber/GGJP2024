@@ -46,7 +46,7 @@ public class DroneMovementController : MonoBehaviour
     {
         Vector3 dronePositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 playerPositionXZ = new Vector3(_player.position.x, 0, _player.position.z);
-        if (_distanceToPlayer > followDistance)
+        if (_distanceToPlayer > followDistance || !_gameManager.IsIn2D)
         {
             Vector3 direction = (playerPositionXZ - dronePositionXZ).normalized;
 

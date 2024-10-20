@@ -126,7 +126,12 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
-		}
+
+			_playerTargetYaw = transform.localEulerAngles.y;
+            _cinemachineTargetPitch = CinemachineCameraTarget.transform.localEulerAngles.x;
+			CameraRotation();
+
+        }
 
         private void OnEnable()
         {

@@ -28,10 +28,10 @@ public class Interactive : MonoBehaviour
         if (numColliders == 0)
         {
             Debug.LogWarning(
-                $"No interaction colliders have been found under interactive " +
-                $"object {name}. The player won't be able to interact with this " +
-                $"object. Please fix this by adding a child GameObject of {name} " +
-                $"with a InteractionCollider component."
+                $"No interaction colliders have been found under interactive "
+                    + $"object {name}. The player won't be able to interact with this "
+                    + $"object. Please fix this by adding a child GameObject of {name} "
+                    + $"with a InteractionCollider component."
             );
         }
     }
@@ -41,9 +41,15 @@ public class Interactive : MonoBehaviour
         SetupInteractionColliders();
     }
 
+    private void FixedUpdate()
+    {
+        if (GameManagerController.instance.IsIn2D)
+            Outline.enabled = false;
+    }
+
     public virtual void Focus()
     {
-        Debug.Assert(IsInteractive, "Você não deve tentar focar um objeto que não é interativo.");
+        Debug.Assert(IsInteractive, "Vocï¿½ nï¿½o deve tentar focar um objeto que nï¿½o ï¿½ interativo.");
         IsFocused = true;
         onFocused?.Invoke();
         Outline.enabled = true;
@@ -60,13 +66,12 @@ public class Interactive : MonoBehaviour
 
     public virtual void Interact()
     {
-        if(!IsInteractive)
+        if (!IsInteractive)
         {
-            Debug.LogWarning("Não tente interagir com objetos que têm obj.IsInteractive == false");
+            Debug.LogWarning("Nï¿½o tente interagir com objetos que tï¿½m obj.IsInteractive == false");
             return;
         }
         PlayerEverInteractedWith = true;
         onInteracted?.Invoke();
     }
-
 }

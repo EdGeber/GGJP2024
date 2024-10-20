@@ -439,6 +439,45 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Global"",
+            ""id"": ""bc814aa0-f197-4f7a-848d-b7e7a82eca0b"",
+            ""actions"": [
+                {
+                    ""name"": ""RestartLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""0829aac7-942a-4a4e-8a48-8ec01c1fbb0f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""efd7b6b3-2bba-4c8f-8b29-7026e4b77f33"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""RestartLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ff74870b-0934-4d40-a2bf-cf3c272c9dc7"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad;Xbox Controller;PS4 Controller"",
+                    ""action"": ""RestartLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -504,6 +543,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         // PersonChange
         m_PersonChange = asset.FindActionMap("PersonChange", throwIfNotFound: true);
         m_PersonChange_ChangeCamera = m_PersonChange.FindAction("ChangeCamera", throwIfNotFound: true);
+        // Global
+        m_Global = asset.FindActionMap("Global", throwIfNotFound: true);
+        m_Global_RestartLevel = m_Global.FindAction("RestartLevel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -731,6 +773,52 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         }
     }
     public PersonChangeActions @PersonChange => new PersonChangeActions(this);
+
+    // Global
+    private readonly InputActionMap m_Global;
+    private List<IGlobalActions> m_GlobalActionsCallbackInterfaces = new List<IGlobalActions>();
+    private readonly InputAction m_Global_RestartLevel;
+    public struct GlobalActions
+    {
+        private @InputActions m_Wrapper;
+        public GlobalActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RestartLevel => m_Wrapper.m_Global_RestartLevel;
+        public InputActionMap Get() { return m_Wrapper.m_Global; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GlobalActions set) { return set.Get(); }
+        public void AddCallbacks(IGlobalActions instance)
+        {
+            if (instance == null || m_Wrapper.m_GlobalActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GlobalActionsCallbackInterfaces.Add(instance);
+            @RestartLevel.started += instance.OnRestartLevel;
+            @RestartLevel.performed += instance.OnRestartLevel;
+            @RestartLevel.canceled += instance.OnRestartLevel;
+        }
+
+        private void UnregisterCallbacks(IGlobalActions instance)
+        {
+            @RestartLevel.started -= instance.OnRestartLevel;
+            @RestartLevel.performed -= instance.OnRestartLevel;
+            @RestartLevel.canceled -= instance.OnRestartLevel;
+        }
+
+        public void RemoveCallbacks(IGlobalActions instance)
+        {
+            if (m_Wrapper.m_GlobalActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IGlobalActions instance)
+        {
+            foreach (var item in m_Wrapper.m_GlobalActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_GlobalActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public GlobalActions @Global => new GlobalActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -782,5 +870,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface IPersonChangeActions
     {
         void OnChangeCamera(InputAction.CallbackContext context);
+    }
+    public interface IGlobalActions
+    {
+        void OnRestartLevel(InputAction.CallbackContext context);
     }
 }

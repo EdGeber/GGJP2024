@@ -35,8 +35,7 @@ public class GameManagerController : MonoBehaviour
         {
             firstPersonController.enabled = !firstPersonController.enabled;
             thirdPersonController.enabled = !thirdPersonController.enabled;
-            if (IsIn2D)
-                GameEvents.PlayerIsLookingDown.Set(true);
+            GameEvents.PlayerIsLookingDown.Set(IsIn2D);
         }
     }
 }

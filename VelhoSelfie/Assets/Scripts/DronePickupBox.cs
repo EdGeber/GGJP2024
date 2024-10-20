@@ -5,21 +5,21 @@ using UnityEngine;
 public class DronePickupBox : MonoBehaviour
 {
     public List<GameObject> Boxes = new();
-    private bool _isLevitating;
+    private int _levitatingState = 0;
     public Transform droneBody;
     public float levitateVelocity = 0.04f;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            _isLevitating = !_isLevitating;
+            _levitatingState = _levitatingState == 1 ? 0 : 1;
         }
     }
 
     private void FixedUpdate()
     {
-        if (_isLevitating)
+        if (_levitatingState == 1)
         {
             foreach (var box in Boxes)
             {
@@ -35,28 +35,44 @@ public class DronePickupBox : MonoBehaviour
                 box.GetComponent<Rigidbody>().useGravity = false;
             }
         }
-        else
+        else if (_levitatingState == 0)
         {
+            List<GameObject> copy = new();
+
             foreach (var box in Boxes)
             {
-                box.GetComponent<Rigidbody>().useGravity = true;
+                copy.Add(box);
             }
-        }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("PickItem"))
-        {
-            Boxes.Add(other.gameObject);
+            foreach (var box in copy)
+            {
+                box.GetComponent<Rigidbody>().useGravity = true;
+                Outline Outline = box.GetComponent<Outline>();
+                Outline.enabled = false;
+                Boxes.Remove(box);
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (Boxes.Contains(other.gameObject) && !_isLevitating)
+        if (Boxes.Contains(other.gameObject) && _levitatingState != 1)
         {
             Boxes.Remove(other.gameObject);
+            Outline Outline = other.GetComponent<Outline>();
+            Outline.enabled = false;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("PickItem") && !Boxes.Contains(other.gameObject) && Boxes.Count < 2)
+        {
+            Boxes.Add(other.gameObject);
+            Outline Outline = other.GetComponent<Outline>();
+            Outline.enabled = true;
+            if (_levitatingState == 0)
+                _levitatingState = 2;
         }
     }
 }

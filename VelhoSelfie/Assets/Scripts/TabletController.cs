@@ -47,10 +47,10 @@ public class TabletController : MonoBehaviour
 
     void OnPlayerLookedDown(bool lookedDown)
     {
-        // if (GameEvents.CurrentTabletBattery.Value == 0)
-        // {
-        //     return;
-        // }
+        if (GameEvents.CurrentTabletBattery.Value == 0)
+        {
+            return;
+        }
         if (lookedDown)
         {
             tweenSettings.startValue = currTweenVal;

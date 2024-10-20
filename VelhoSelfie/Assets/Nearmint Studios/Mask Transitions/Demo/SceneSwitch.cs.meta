@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6e5275aca9beb324a8da4b5b9ea383c1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 295860
+  packageName: Mask Transitions
+  packageVersion: 1.0
+  assetPath: Assets/Nearmint Studios/Mask Transitions/Demo/SceneSwitch.cs
+  uploadId: 693016

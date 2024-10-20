@@ -109,6 +109,7 @@ namespace StarterAssets
         private CharacterController _controller;
         private StarterAssetsInputs _input;
         private GameObject _mainCamera;
+        public Animator animator;
 
         private const float _threshold = 0.01f;
 
@@ -251,7 +252,7 @@ namespace StarterAssets
             _controller.Move(
                 (targetVelocity + new Vector3(0.0f, _verticalVelocity, 0.0f)) * Time.deltaTime
             );
-
+            animator.SetFloat("Speed", Mathf.Abs(targetVelocity.magnitude));
             /*
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;

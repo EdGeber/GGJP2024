@@ -10,4 +10,6 @@ public static class GameEvents
 
     public static InteractiveEvent InteractionAttempted => GameEventContainer.Get<InteractiveEvent>("InteractionAttempted");
 
+    public static BoolEvent PlayerIsLookingDown => GameEventContainer.Get<BoolEvent>("PlayerIsLookingDown");
+
 }

@@ -31,6 +31,7 @@ public class GameManagerController : MonoBehaviour
 
     void Update()
     {
+        return;
         if (inputActions.PersonChange.ChangeCamera.triggered)
         {
             firstPersonController.enabled = !firstPersonController.enabled;

@@ -32,6 +32,8 @@ public class DroneMovementController : MonoBehaviour
             MoveIn2D();
         }
 
+
+
         Follow();
     }
 

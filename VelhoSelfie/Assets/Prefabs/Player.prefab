@@ -114,13 +114,13 @@ MonoBehaviour:
   RotationSpeed: 2
   SpeedChangeRate: 5
   LookDownEventRotationThreshould: 45
-  JumpHeight: 0.6
+  JumpHeight: 1
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
   Grounded: 1
-  GroundedOffset: 0.2
-  GroundedRadius: 0.5
+  GroundedOffset: 0.55
+  GroundedRadius: 0.1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1

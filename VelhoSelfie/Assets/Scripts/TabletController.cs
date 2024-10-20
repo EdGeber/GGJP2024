@@ -51,6 +51,7 @@ public class TabletController : MonoBehaviour
         {
             return;
         }
+        GameEvents.PlayerMovementEnabled.Set(!lookedDown);
         if (lookedDown)
         {
             tweenSettings.startValue = currTweenVal;

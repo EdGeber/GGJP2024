@@ -26,4 +26,6 @@ public static class GameEvents
 
     public static IntEvent TabletBatteryLevel2 => GameEventContainer.Get<IntEvent>("TabletBatteryLevel2");
 
+    public static BoolEvent PlayerMovementEnabled => GameEventContainer.Get<BoolEvent>("PlayerMovementEnabled");
+
 }

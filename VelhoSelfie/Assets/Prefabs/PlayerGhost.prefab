@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionTarget: {fileID: 0}
   rotationTarget: {fileID: 0}
-  horizontalDamping: 0.85
-  verticalDamping: 0.6
+  horizontalDamping: 0.7
+  verticalDamping: 0.4
   rotationDamping: 0
   offset: {x: 0, y: 0.6, z: 0}

@@ -241,6 +241,11 @@ namespace StarterAssets
 
         private void Move()
         {
+            if(!GameEvents.PlayerMovementEnabled.Value)
+            {
+                return;
+            }
+
             float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
             float targetSpeed = (_input.sprint ? SprintSpeed : MoveSpeed) * inputMagnitude;
 

@@ -778,6 +778,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabletBattery: {fileID: 11400000, guid: 238005eec404e274dbbf9d5ce3ff4a9b, type: 2}
+  isFinalLevel: 0
 --- !u!1 &1614039882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1552,7 +1553,7 @@ PrefabInstance:
     - target: {fileID: 3313635102472948158, guid: 8ad84e99cb63393468d77079750bf9a5,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3313635102472948158, guid: 8ad84e99cb63393468d77079750bf9a5,
         type: 3}
@@ -1648,11 +1649,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4360489311846203947, guid: 8ad84e99cb63393468d77079750bf9a5,
-        type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4416172340851496859, guid: 8ad84e99cb63393468d77079750bf9a5,
         type: 3}

@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  DroneSpeed: 5
+  DroneSpeed: 2
   followDistance: 8
 --- !u!136 &3886298749788101108
 CapsuleCollider:

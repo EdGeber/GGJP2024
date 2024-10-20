@@ -113,7 +113,7 @@ MonoBehaviour:
   SprintSpeed: 0
   RotationSpeed: 2
   SpeedChangeRate: 5
-  LookDownEventRotationThreshould: 30
+  LookDownEventRotationThreshould: 45
   JumpHeight: 0.6
   Gravity: -15
   JumpTimeout: 0.1

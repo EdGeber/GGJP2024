@@ -741,6 +741,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1286720369}
+  - component: {fileID: 1286720370}
   m_Layer: 0
   m_Name: Level0
   m_TagString: Untagged
@@ -763,6 +764,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1286720370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286720368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0a29c2db33f3a4486f133a17a13420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tabletBattery: {fileID: 11400000, guid: 238005eec404e274dbbf9d5ce3ff4a9b, type: 2}
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0

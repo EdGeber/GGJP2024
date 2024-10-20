@@ -17,8 +17,10 @@ public class TabletController : MonoBehaviour
 
     void OnTween(float t)
     {
-        cameraTexture.transform.localPosition = Vector3.Lerp(restTransform.localPosition, focusTransform.localPosition, t);
-        cameraTexture.transform.localRotation = Quaternion.Slerp(restTransform.localRotation, focusTransform.localRotation, t);
+        cameraTexture.transform.SetLocalPositionAndRotation(
+            Vector3.Lerp(restTransform.localPosition, focusTransform.localPosition, t),
+            Quaternion.Slerp(restTransform.localRotation, focusTransform.localRotation, t)
+        );
     }
 
     void OnPlayerLookedDown(bool lookedDown)

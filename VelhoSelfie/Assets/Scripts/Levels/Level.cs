@@ -6,6 +6,8 @@ public abstract class Level : MonoBehaviour
 
     [SerializeField]
     IntEvent tabletBattery;
+    [SerializeField]
+    bool isFinalLevel;
 
     [ShowNativeProperty]
     public abstract int LevelNumber { get; }
@@ -52,7 +54,13 @@ public abstract class Level : MonoBehaviour
         enabled = false;
         CurtainManager.Instance.FadeIn(() =>
         {
-            SceneManager.LoadScene($"Level{LevelNumber + 1}");
+            if (isFinalLevel)
+            {
+                SceneManager.LoadScene("EndGame");
+            } else
+            {
+                SceneManager.LoadScene($"Level{LevelNumber + 1}");
+            }
             CurtainManager.Instance.FadeOut();
         });
     }

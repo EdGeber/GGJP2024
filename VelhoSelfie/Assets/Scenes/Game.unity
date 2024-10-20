@@ -1334,6 +1334,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5476390436614754013, guid: f0de4bde4f4a6ba43986a8a3846d2666,
         type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476390436614754013, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1345,6 +1350,36 @@ PrefabInstance:
     - target: {fileID: 7188793075868292204, guid: f0de4bde4f4a6ba43986a8a3846d2666,
         type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376503771386081221, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376503771386081221, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376503771386081221, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376503771386081221, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376503771386081221, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376503771386081221, guid: f0de4bde4f4a6ba43986a8a3846d2666,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -13420,6 +13455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37e42a0fb981690488ffa80cdca499be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  batteryValue: {fileID: 0}
   cameraTexture: {fileID: 1077607979}
   restTransform: {fileID: 617369138}
   focusTransform: {fileID: 578684513}
@@ -14278,5 +14314,5 @@ SceneRoots:
   - {fileID: 640621027}
   - {fileID: 272551287}
   - {fileID: 2118948712}
-  - {fileID: 1559998030}
   - {fileID: 289644072}
+  - {fileID: 1559998030}

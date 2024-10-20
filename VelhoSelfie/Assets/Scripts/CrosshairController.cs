@@ -20,6 +20,13 @@ public sealed class CrosshairManager : MonoBehaviour
     bool isFocused;
     Tween interactionTween;
 
+    [Foldout("Hide animation")] [SerializeField]
+    CanvasGroup container;
+    [Foldout("Hide animation")] [SerializeField]
+    TweenSettings<float> hideTweenSettings;
+    Tween hideTween;
+    float currHideTweenValue = 1f;
+
     [Foldout("Focus animation")]
     [Range(1f, 3f)]
     [SerializeField]
@@ -67,6 +74,12 @@ public sealed class CrosshairManager : MonoBehaviour
     {
         Canvas.ForceUpdateCanvases();
         unfocusedCrosshairScale = transform.localScale;
+    }
+
+    void OnHideTween(float t)
+    {
+        container.alpha = t;
+        currHideTweenValue = t;
     }
 
     void OnFocusTween(float t)
@@ -119,6 +132,20 @@ public sealed class CrosshairManager : MonoBehaviour
         );
     }
 
+    void OnPlayerLookedDown(bool lookedDown)
+    {
+        hideTweenSettings.startValue = currHideTweenValue;
+        if(lookedDown)
+        {
+            hideTweenSettings.endValue = 0f;
+        } else
+        {
+            hideTweenSettings.endValue = 1f;
+        }
+        hideTween.Stop();
+        hideTween = Tween.Custom(hideTweenSettings, OnHideTween);
+    }
+
     void OnObjectFocusChanged(Interactive interactive)
     {
         AnimateFocus(interactive != null && interactive.IsFocused);
@@ -143,6 +170,7 @@ public sealed class CrosshairManager : MonoBehaviour
     void Subscribe()
     {
         GameEvents.CurrentView?.AddListener(OnViewChanged, AliveToken, true);
+        GameEvents.PlayerIsLookingDown?.AddListener(OnPlayerLookedDown, AliveToken);
     }
 
     void Awake()

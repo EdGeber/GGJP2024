@@ -312,6 +312,7 @@ namespace StarterAssets
 
         private void HandleInteraction()
         {
+			if (GameEvents.PlayerIsLookingDown) return;
             if (interact)
             {
                 if (focusedObject != null && focusedObject.IsInteractive)

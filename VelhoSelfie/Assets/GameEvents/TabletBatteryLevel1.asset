@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bd8897267b6dd64d9c6664c289b4749, type: 3}
   m_Name: TabletBatteryLevel1
   m_EditorClassIdentifier: 
-  defaultValue: 0
-  currentValue: 0
+  defaultValue: 5
+  currentValue: 5
   newValue: 0

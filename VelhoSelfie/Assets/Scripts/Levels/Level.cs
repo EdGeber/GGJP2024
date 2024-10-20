@@ -47,4 +47,13 @@ public abstract class Level : MonoBehaviour
         }
     }
 
+    public virtual void OnPlayerEnteredTrigger()
+    {
+        enabled = false;
+        CurtainManager.Instance.FadeIn(() =>
+        {
+            SceneManager.LoadScene($"Level{LevelNumber + 1}");
+            CurtainManager.Instance.FadeOut();
+        });
+    }
 }

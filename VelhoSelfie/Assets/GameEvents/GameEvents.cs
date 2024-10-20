@@ -10,4 +10,5 @@ public static class GameEvents
 
     public static InteractiveEvent InteractionAttempted => GameEventContainer.Get<InteractiveEvent>("InteractionAttempted");
 
+    public static BoolEvent EscaladaFinished => GameEventContainer.Get<BoolEvent>("EscaladaFinished");
 }

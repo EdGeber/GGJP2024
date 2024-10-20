@@ -48,7 +48,7 @@ ExportedObj/
 *.VC.db
 
 # Unity Assets Folders
-Assets/Game Buffs/
+# Assets/Game Buffs/
 
 # Unity3D generated meta files
 *.pidb.meta

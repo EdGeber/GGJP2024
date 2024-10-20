@@ -25,6 +25,12 @@ public class DroneMovementController : MonoBehaviour
 
     void Update()
     {
+        if(_gameManager == null)
+        {
+            Debug.LogWarning("Field _gameManager is null");
+            return;
+        }
+
         CalculateDistance();
 
         if (_gameManager.IsIn2D)
@@ -37,6 +43,10 @@ public class DroneMovementController : MonoBehaviour
 
     private void CalculateDistance()
     {
+        if(_player == null) {
+            Debug.LogWarning("Field _player is null");
+            return;
+        }
         Vector3 dronePositionXZ = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 playerPositionXZ = new Vector3(_player.position.x, 0, _player.position.z);
         _distanceToPlayer = Vector3.Distance(dronePositionXZ, playerPositionXZ);

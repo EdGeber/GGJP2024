@@ -2,11 +2,13 @@ using PrimeTween;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(StateTokenComponent))]
 public class TabletController : MonoBehaviour
 {
+    [SerializeField] TMP_Text batteryValue;
     [SerializeField] RectTransform cameraTexture;
     [SerializeField] RectTransform restTransform;  // t = 0
     [SerializeField] RectTransform focusTransform; // t = 1
@@ -40,9 +42,16 @@ public class TabletController : MonoBehaviour
         tween = Tween.Custom(tweenSettings, OnTween);
     }
 
+    void UpdateBatteryValue(int ignore)
+    {
+        batteryValue.text = $"{GameEvents.CurrentTabletBattery}/{GameEvents.MaxTabletBattery}";
+    }
+
     void Start()
     {
         GameEvents.PlayerIsLookingDown.AddListener(OnPlayerLookedDown, AliveToken);
+        GameEvents.MaxTabletBattery.AddListener(UpdateBatteryValue, AliveToken);
+        GameEvents.CurrentTabletBattery.AddListener(UpdateBatteryValue, AliveToken );
     }
 
 }

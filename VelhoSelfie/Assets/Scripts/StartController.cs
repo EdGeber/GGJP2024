@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MaskTransitions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,8 +10,9 @@ public class StartController : MonoBehaviour
     {
         GameEventContainer.Instance.ResetAllToDefault();
     }
+
     public void GoToGame()
     {
-        SceneManager.LoadScene("Level0");
+        TransitionManager.Instance.LoadLevel("Level0");
     }
 }

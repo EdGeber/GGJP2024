@@ -20,8 +20,10 @@ namespace StarterAssets
 		public float RotationSpeed = 1.0f;
 		[Tooltip("Acceleration and deceleration")]
 		public float SpeedChangeRate = 10.0f;
+		[Tooltip("In degrees")]
+		public float LookDownEventRotationThreshould = 30f;
 
-		[Space(10)]
+        [Space(10)]
 		[Tooltip("The height the player can jump")]
 		public float JumpHeight = 1.2f;
 		[Tooltip("The character uses its own gravity value. The engine default is -9.81f")]
@@ -179,7 +181,7 @@ namespace StarterAssets
 				_cinemachineTargetPitch += _input.look.y * RotationSpeed * deltaTimeMultiplier;
 				_cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
 				targetCamPitch = Quaternion.Euler(_cinemachineTargetPitch, 0.0f, 0.0f);
-
+				GameEvents.PlayerIsLookingDown.Set(_cinemachineTargetPitch > LookDownEventRotationThreshould);
 			}
 
             // Update Cinemachine camera target pitch

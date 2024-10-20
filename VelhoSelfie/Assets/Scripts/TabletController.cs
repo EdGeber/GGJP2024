@@ -8,16 +8,18 @@ using UnityEngine;
 public class TabletController : MonoBehaviour
 {
     [SerializeField] RectTransform cameraTexture;
-    [SerializeField] RectTransform restTransform;
-    [SerializeField] RectTransform focusTransform;
+    [SerializeField] RectTransform restTransform;  // t = 0
+    [SerializeField] RectTransform focusTransform; // t = 1
     [SerializeField] TweenSettings<float> tweenSettings;
  
     CancellationToken AliveToken => GetComponent<StateTokenComponent>().AliveToken;
     Tween tween;
+    float currTweenVal = 0f;
 
     void OnTween(float t)
     {
-        cameraTexture.transform.SetLocalPositionAndRotation(
+        currTweenVal = t;
+        cameraTexture.SetLocalPositionAndRotation(
             Vector3.Lerp(restTransform.localPosition, focusTransform.localPosition, t),
             Quaternion.Slerp(restTransform.localRotation, focusTransform.localRotation, t)
         );
@@ -27,10 +29,12 @@ public class TabletController : MonoBehaviour
     {
         if (lookedDown)
         {
-            tweenSettings.startValue = tween.isAlive ? tween.progress : 0f;
+            tweenSettings.startValue = currTweenVal;
+            tweenSettings.endValue = 1f;
         } else
         {
-            tweenSettings.startValue = tween.isAlive ? tween.progress : 1f;
+            tweenSettings.startValue = currTweenVal;
+            tweenSettings.endValue = 0f;
         }
         tween.Stop();
         tween = Tween.Custom(tweenSettings, OnTween);

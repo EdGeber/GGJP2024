@@ -53,6 +53,7 @@ public abstract class GameEvent<T> : GameEventBase
         Set(defaultValue, silent);
     }
 
+    [Button]
     public override void ResetToDefault()
     {
         ResetToDefault(true);
